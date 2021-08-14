@@ -1,0 +1,60 @@
+<main class="contenedor">
+  <article class="principal">
+    <div class="div_men">
+      <p class="men">Comunicate con tus amigos 
+        <br/>en cualquier lugar del mundo <br/>
+        y a cualquier hora</p>
+    </div>
+    <div class="img-presentacion"> <img src="../../../../assets/images/icono_face.png" /> </div>
+    <div class="registro">
+      <h1>
+        Red Social
+      </h1>
+      <form>
+        <div class="grupo-formulario">
+          <input type="email" name="email" placeholder="Correo Electronico" [(ngModel)]="usuario.email_user" required="true">
+          <input type="password" name="contrasena" placeholder="Ingrese contraseña"[(ngModel)]="usuario.contrasena_usuario" required="true">
+          <button (click)="logear()">Iniciar Sesión </button>
+        </div>
+      </form>
+      <p> <a href="#">¿Olvidaste tu contraseña?</a>  </p>
+    </div>
+    <div class="enlace-login">
+      <p>¿No tienes una cuenta? <a [routerLink]="['/registro']">Registrate</a></p>
+    </div>
+  </article>
+
+</main>
+<footer>
+  <!-- <ul>
+    <li>
+      INFORMACIÓN
+    </li>
+    <li>
+      AYUDA
+    </li>
+    <li>
+      PRENSA
+    </li>
+    <li>
+      EMPLEO
+    </li>
+    <li>
+      PRIVACIDAD
+    </li>
+    <li>
+      CONDICIONES
+    </li>
+    <li>
+      UBICACIONES
+    </li>
+    <li>
+      CUENTAS DESTACADAS
+    </li>
+    <li>
+      © 2020 Henry Simbaña -Bryan Gonzales -Marvin Valarezo -Ricardo Ramón -Frank Narvaez -Elvis Paredes
+    </li>
+  </ul> -->
+</footer>
+
+

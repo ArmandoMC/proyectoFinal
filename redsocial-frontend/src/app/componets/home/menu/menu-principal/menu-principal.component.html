@@ -1,0 +1,82 @@
+  
+<div class="navbar"> 
+  <div class="container sup">
+    
+  </div>
+  <div class="navbar_menuicon" id="navicon">
+    <img src="/../../../assets/img/barras.png" alt="">
+  </div>
+  <div class="navbar_logo">
+    <img src="/../../../assets/images/mi_icono.png" alt="" />
+  </div>
+  <div class="navbar_search">
+    <form method="" action="/">
+      <input type="text" placeholder="Buscar personas.." [(ngModel)]="usuarioBuscar" name="buscar"/>
+      <button><img src="/../../../assets/img/buscar.png" alt="" (click)="buscar()"></button>
+    </form>
+  </div>
+  <div class="navbar_icons">
+    <ul>
+      <a [routerLink]="['/home']" style="color:white">
+        <li><img src="/../../../assets/img/casa1.png" alt=""></li>
+      </a>
+      <li id="friendsmodal"><img src="/../../../assets/img/notifi3.png" alt=""><span id="notification">{{cantSolicitudes}}</span></li>
+    </ul>
+  </div>
+  <div class="navbar_user" id="profilemodal" style="cursor:pointer">
+    <img *ngIf="usuario.imagen_usuario == ''" src="/../../../assets/images/usuario_perfil.png" alt="" />
+    <img *ngIf="usuario.imagen_usuario !== ''"src="{{usuario.imagen_usuario}}" alt="" />
+    <span id="navbar_user_top">{{usuario.nombres_user}} {{usuario.apellidos_user}}<br>
+      <p>{{usuario.nom_usuario}}</p>
+    </span><i class="fa fa-angle-down"></i>
+  </div>
+  
+</div>
+    <!-- Modal Friends -->
+    <div class="modal modal-friends">
+      <div class="modal-icon-select"><i class="fa fa-sort-asc" aria-hidden="true"></i></div>
+      <div class="modal-title amigos">
+        <span>Notificaciones</span>
+      </div>
+      <div class="modal-content contenido_amigos">
+        <ul>
+          <li *ngFor="let amigo of solicitudes">
+            <a>
+              <img  *ngIf="amigo.imagen_usuario" src="{{amigo.imagen_usuario}}" alt="" />
+              <span><b>{{amigo.nom_usuario}}</b><br>1 Amigos en común</span>
+              <button class="modal-content-accept" (click)="aceptar(amigo.id_usuario, amigo.id_amigo)">Aceptar</button><button class="modal-content-decline">Descartar</button>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Modal Profile -->
+    <div class="modal modal-profile">
+      <div class="modal-icon-select"><i class="fa fa-sort-asc" aria-hidden="true"></i></div>
+      <div class="modal-title perfil">
+        <span>Ajustes</span>
+        <a [routerLink]="['/configuracion']"><i class="fa fa-cogs"></i></a>
+      </div>
+      <div class="modal-content contenido_perfil">
+        <ul>
+          <li>
+            <a [routerLink]="['/configuracion']">
+              <i class="fa fa-tasks" aria-hidden="true"></i>
+              <span><b>Configuración de cuenta</b><br></span>
+            </a>
+          </li>
+          <!-- <li>
+            <a href="#">
+              <i class="fa fa-star-o" aria-hidden="true"></i>
+              <span><b>Crear una Página</b><br>Crear Mi Página</span>
+            </a>
+          </li> -->
+          <li>
+            <a href="#" (click)="cerrarSesion()">
+              <i class="fa fa-power-off" aria-hidden="true"></i>
+              <span><b>Cerrar sesión</b><br></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
