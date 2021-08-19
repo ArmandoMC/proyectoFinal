@@ -36,7 +36,6 @@ export class InformacionPersonalComponent implements OnInit {
     this.usuarioService.getUsuario().subscribe(
       (res: any) => {
         this.almacenarUsuario(res[0]);
-        console.log(res[0]);
       }, err => { }
     );
   }

@@ -1,7 +1,7 @@
 <main class="contenedor">
   <article class="principal">
     <div class="div_men">
-      <p class="men">Con YUYO comunicate con tus amigos 
+      <p class="men">Con YUYO comunicate con tus amigos
         <br/>en cualquier lugar del mundo <br/>
         y a cualquier hora</p>
     </div>
@@ -46,6 +46,12 @@
           <option *ngFor="let genero of generos" [value]="genero.id_genero">{{genero.nombre_genero}}</option>
         </select>
         <p style="color:red;">{{ alertaGenero }}</p>
+        <label for="">Provincia</label>
+        <select name="provincia" [(ngModel)]="usuario.id_provincia" required>
+          <option select disabled value="0">Seleccione una Provincia</option>
+          <option *ngFor="let provincia of provincias" [value]="provincia.id_provincia">{{provincia.nombre_provincia}}</option>
+        </select>
+        <p style="color:red;">{{ alertaProvincia}}</p>
         <button type="submit" [disabled]="f.invalid">Registarse</button>
       </form>
       <p>Al registrarte, aceptas nuestras Condiciones, la Política de datos y la Política de cookies.</p>

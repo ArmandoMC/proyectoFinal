@@ -58,10 +58,10 @@ export class PublicacionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsuario();
-    this.getAmigos(); 
+    this.getAmigos();
     this.getPublicaciones();
-    
-    
+
+
     // obtiene publicaciones desde el servidor mediante socket
     this.webService.listen('obtener-notificacion').subscribe((data: any) => {
       this.notificar(data[0].contenido_notif, "Informacion");
@@ -71,7 +71,7 @@ export class PublicacionesComponent implements OnInit {
       // tslint:disable-next-line: prefer-for-of
       console.log(data)
       for (let index = 0; index < data.length; index++) {
-        
+
         if (this.esAmigo(data[index].id_usuario)) {
           this.publicaciones.push(data[index]);
         }
@@ -129,7 +129,7 @@ export class PublicacionesComponent implements OnInit {
         this.amigos = res;
       }
     );
-    
+
   }
     //Metodo Notificar
     notificar(mensaje: string, tipo_notificacion: string) {
@@ -176,12 +176,13 @@ export class PublicacionesComponent implements OnInit {
       }
     );
   }
-  filtrarPublicaciones(publicaciones){
+  filtrarPublicaciones(publicaciones) {
     for (let index = 0; index < publicaciones.length; index++) {
       if (this.esAmigo(publicaciones[index].id_usuario)) {
         this.publicaciones.push(publicaciones[index]);
       }
     }
+    console.log(this.publicaciones);
     this.getComentarios(publicaciones);
     this.getImagenes(publicaciones);
   }

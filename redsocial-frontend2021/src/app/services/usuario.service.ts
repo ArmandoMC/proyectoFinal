@@ -82,5 +82,8 @@ confirmContrasena(id_usuario: number, updateUsuario: Usuario): any {
 getGeneros(){
   return this.http.get(`${this.API_URI}/generos`);
 }
+  getProvincias() {
+  return this.http.get(`${this.API_URI}/provincias`);
+}
 
 }

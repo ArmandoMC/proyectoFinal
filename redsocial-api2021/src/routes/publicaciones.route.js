@@ -10,8 +10,8 @@ const multer = require('multer');
 const uploader = multer ({ storage }).single('file');
 
 
-router.get('/publicaciones',validacion.verifyToken,publicaciones.getpublicaciones);
-router.get('/publicacion/:id_pub',validacion.verifyToken,publicaciones.getpublicacion);
+router.get('/publicaciones/:id_provincia',validacion.verifyToken,publicaciones.getpublicaciones);
+router.get('/publicacion/:id_pub/:id_provincia',validacion.verifyToken,publicaciones.getpublicacion);
 router.post('/publicar',validacion.verifyToken,publicaciones.registro);
 router.post('/guardarImagen',validacion.verifyToken,uploader,multimedia.registro);
 router.delete('/eliminarPublicacion/:id_pub', validacion.verifyToken,publicaciones.delete);

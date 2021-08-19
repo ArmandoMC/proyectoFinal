@@ -38,12 +38,13 @@ export class LoginComponent implements OnInit {
       res => {
         this.token = res.token;
         localStorage.setItem('token', this.token);
+        this.getUsuario();
         this.router.navigate(['/home']);
       },
       // Errores al enviar datos al servicio de aporte almacenado en  err
       err => {
          this.notificacionService.notificar(err.error,'Error');
-         
+
 
       }
     );
@@ -54,6 +55,13 @@ export class LoginComponent implements OnInit {
    if (this.usuarioService.estaLogeado){
       this.router.navigate(['/home']);
     }
+  }
+   getUsuario() {
+    this.usuarioService.getUsuario().subscribe(
+      (res: any) => {
+        localStorage.setItem('id_provincia', res[0].id_provincia);
+      }, err => { }
+    );
   }
 
 }

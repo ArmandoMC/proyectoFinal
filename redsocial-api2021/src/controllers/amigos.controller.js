@@ -1,4 +1,5 @@
 const conexion = require('./conexionDB')
+const helper = require("../helper");
 const amigos = {};
 amigos.registro = async(req, res) => {
     const {es_aceptada, fecha_emision_amigo, es_seguido, es_seguidor, es_bloqueado, id_usuario, id_amigo } = req.body;
@@ -62,17 +63,26 @@ amigos.delete = async (req, res) => {
 }
 amigos.getamigos = async (req, res) => {
     const id = req.params.id_usuario;
-    const response = await conexion.query(`SELECT * from amigos,usuario where amigos.id_amigo = usuario.id_usuario and amigos.id_usuario = ${id} and es_aceptada = true`);
+    let id_provincia = req.params.id_provincia;
+    const response = await helper.balancear_carga(
+      id_provincia,`SELECT * from amigos,usuario where amigos.id_amigo = usuario.id_usuario and amigos.id_usuario = ${id} and es_aceptada = true`
+    );
     res.status(200).json(response.rows);
 }
 amigos.getSolicitudAmigos = async (req, res) => {
     const id = req.params.id_usuario;
-    const response = await conexion.query(`SELECT es_aceptada, fecha_emision_amigo,es_seguido, es_bloqueado, amigos.id_usuario,amigos.id_amigo,usuario.nom_usuario, usuario.imagen_usuario from amigos,usuario where amigos.id_amigo = usuario.id_usuario and amigos.id_amigo = ${id} and es_aceptada = false`);
+    let id_provincia = req.params.id_provincia;
+    const response = await helper.balancear_carga(
+      id_provincia,`SELECT es_aceptada, fecha_emision_amigo,es_seguido, es_bloqueado, amigos.id_usuario,amigos.id_amigo,usuario.nom_usuario, usuario.imagen_usuario from amigos,usuario where amigos.id_amigo = usuario.id_usuario and amigos.id_amigo = ${id} and es_aceptada = false`
+    );
     res.status(200).json(response.rows);
 }
 amigos.getcantSeguid = async (req, res) => {
     const id = req.params.id_usuario;
-    const response = await conexion.query(`select count(es_seguido) from amigos where es_seguido = true and id_usuario = ${id}`);
+    let id_provincia = req.params.id_provincia;
+    const response = await helper.balancear_carga(
+      id_provincia,`select count(es_seguido) from amigos where es_seguido = true and id_usuario = ${id}`
+    );
     res.status(200).json(response.rows);
 }
 module.exports = amigos;

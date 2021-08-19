@@ -9,15 +9,16 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class AmistadesService {
   API_URI = environment.API_URI; // URL de Backend
+  id_provincia = localStorage.getItem('id_provincia')
   constructor(private http: HttpClient, private router: Router) { }
   getAmigos(id_usuario: number) {
-    return this.http.get(`${this.API_URI}/amigo/${id_usuario}`);
+    return this.http.get(`${this.API_URI}/amigo/${id_usuario}/${this.id_provincia}`);
   }
   getsoliicitudesAmistad(id_usuario: number){
-    return this.http.get(`${this.API_URI}/solocitudesAmistad/${id_usuario}`);
+    return this.http.get(`${this.API_URI}/solocitudesAmistad/${id_usuario}/${this.id_provincia}`);
   }
   cantidadSeguidores(id_usuario: number) {
-    return this.http.get(`${this.API_URI}/solocitudesAmistad/${id_usuario}`);
+    return this.http.get(`${this.API_URI}/seguidores/${id_usuario}/${this.id_provincia}`);
   }
   // Elimina Usuarios teniendo id  desde bd mediante servidor backend
   deleteAmigo(id_usuario: number, id_amigo: number) {

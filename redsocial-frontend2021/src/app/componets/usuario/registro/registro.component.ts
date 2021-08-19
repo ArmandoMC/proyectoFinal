@@ -7,10 +7,11 @@ import { NotificacionService } from 'src/app/services/notificacion.service';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css']
+  styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent implements OnInit {
-  usuario: Usuario = {  id_usuario: 0,
+  usuario: Usuario = {
+    id_usuario: 0,
     nombres_user: '',
     apellidos_user: '',
     nom_usuario: '',
@@ -20,48 +21,60 @@ export class RegistroComponent implements OnInit {
     contrasena_usuario: '',
     presentacion: '',
     telefono: '',
-    id_genero: 0 };
-    generos = [];
-    edad;
-    alertaEdad;
-    alertaGenero;
+    id_genero: 0,
+    id_provincia: 0,
+  };
+  generos = [];
+  edad;
+  alertaEdad;
+  alertaGenero;
   file: File;
-  constructor(private usuarioService: UsuarioService,
-    private notificacionService:NotificacionService,
-              private router: Router, ) { }
+  alertaProvincia: string;
+  provincias = [];
+  constructor(
+    private usuarioService: UsuarioService,
+    private notificacionService: NotificacionService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.getGeneros();
+    this.getProvincias();
   }
   // Registra usuario
   // tslint:disable-next-line: typedef
 
-  public registrarse(){
-
+  public registrarse() {
     var genero = this.usuario.id_genero;
     var fecha = this.usuario.fecha_nac;
+    var provincia = this.usuario.id_provincia;
 
     const convertAge = new Date(fecha);
     const timeDiff = Math.abs(Date.now() - convertAge.getTime());
-    this.edad = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+    this.edad = Math.floor(timeDiff / (1000 * 3600 * 24) / 365);
 
-    if(this.edad < 18)
-    {
-      this.alertaEdad = "Usted debe ser mayor de edad para registrarse."
-    }else{
-      this.alertaEdad = ""
+    if (this.edad < 18) {
+      this.alertaEdad = 'Usted debe ser mayor de edad para registrarse.';
+    } else {
+      this.alertaEdad = '';
       if (genero == 0) {
-        this.alertaGenero = "Seleccione un género de las opciones otorgadas."
+        this.alertaGenero = 'Seleccione un género de las opciones otorgadas.';
+      } else if (provincia == 0) {
+        this.alertaProvincia =
+          'Seleccione una provincia de las opciones otorgadas.';
       } else {
         this.usuarioService.saveUsuario(this.usuario).subscribe(
           (res: any) => {
             const token = res.token;
             localStorage.setItem('token', token);
-            this.notificacionService.notificar('Usuario Registrado con exito','Informacion');
+            this.notificacionService.notificar(
+              'Usuario Registrado con exito',
+              'Informacion'
+            );
             this.limpiar();
             this.abrirModal('cambiarImagenModal');
           },
-          err => {
-            this.notificacionService.notificar(err.error,'Error');
+          (err) => {
+            this.notificacionService.notificar(err.error, 'Error');
           }
         );
       }
@@ -71,7 +84,8 @@ export class RegistroComponent implements OnInit {
     this.usuarioService.getUsuario().subscribe(
       (res: any) => {
         this.guardarImagen(res[0].id_usuario);
-      }, err => { }
+      },
+      (err) => {}
     );
   }
   public onFileChange(event): void {
@@ -86,7 +100,7 @@ export class RegistroComponent implements OnInit {
       this.file = file;
     }
   }
- // Abre ventana Modal
+  // Abre ventana Modal
   // tslint:disable-next-line: variable-name
   public abrirModal(nombre_modal: string): void {
     const modal = document.getElementById(nombre_modal);
@@ -108,37 +122,48 @@ export class RegistroComponent implements OnInit {
   guardarImagen(id_usuario) {
     // tslint:disable-next-line: variable-name
     // tslint:disable-next-line: radix
-    this.usuarioService.updateImagenUsuario(id_usuario, this.file).subscribe(
-          (res:any) => {
-          alert(res);
-          this.cerrarModal('cambiarImagenModal');
-        }
-    );
+    this.usuarioService
+      .updateImagenUsuario(id_usuario, this.file)
+      .subscribe((res: any) => {
+        alert(res);
+        this.cerrarModal('cambiarImagenModal');
+      });
   }
 
   // limpia el objeto usuario
   // tslint:disable-next-line: typedef
   limpiar() {
-    this.usuario.nombres_user = '',
-    this.usuario.apellidos_user = '',
-    this.usuario.email_user = '',
-    this.usuario.celular_user = '',
-    this.usuario.fecha_nac = new Date(),
-    this.usuario.nom_usuario = "",
-    this.usuario.contrasena_usuario =  '',
-    this.usuario.presentacion = '',
-    this.usuario.telefono =  '',
-    this.usuario.id_genero = 0;
-    this.alertaEdad = ""
-    this.alertaGenero = ""
+    (this.usuario.nombres_user = ''),
+      (this.usuario.apellidos_user = ''),
+      (this.usuario.email_user = ''),
+      (this.usuario.celular_user = ''),
+      (this.usuario.fecha_nac = new Date()),
+      (this.usuario.nom_usuario = ''),
+      (this.usuario.contrasena_usuario = ''),
+      (this.usuario.presentacion = ''),
+      (this.usuario.telefono = ''),
+      (this.usuario.id_genero = 0);
+    this.usuario.id_provincia = 0;
+    this.alertaEdad = '';
+    this.alertaGenero = '';
+    this.alertaProvincia = '';
   }
   // obtiene los generos desde bd
   // tslint:disable-next-line: typedef
-  public getGeneros(){
+  public getGeneros() {
     this.usuarioService.getGeneros().subscribe(
       (res: any) => {
         this.generos = res;
-      }, err => {}
+      },
+      (err) => {}
+    );
+  }
+  public getProvincias() {
+    this.usuarioService.getProvincias().subscribe(
+      (res: any) => {
+        this.provincias = res;
+      },
+      (err) => {}
     );
   }
 }
