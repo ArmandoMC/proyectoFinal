@@ -83,6 +83,7 @@ export class CambioContrasenaComponent implements OnInit {
       presentacion: '',
       telefono: '',
       id_genero: 0,
+      id_provincia: 0,
     };
     const contraseniaAC: Usuario = {
       id_usuario: 0,
