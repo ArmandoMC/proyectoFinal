@@ -4,7 +4,7 @@
     <div class="friend" *ngFor="let amigo of amigos">
         <div class="friend_title">
             <img src="{{amigo.imagen_usuario}}" alt="" />
-            <span><b>{{amigo.nom_usuario}}</b><br><p>1 Amigos en común</p></span>
+            <span><b>{{amigo.nom_usuario}}</b><br><p>Amigo</p></span>
             <button class="delete-friend" style="margin-right: 5%;" (click)="seguirAmigo(amigo.id_amigo)">{{verificarSegidor(amigo.es_segido)}}</button>
             <button class="delete-friend" style="margin-right: 5%;" (click)="bloquearAmigo(amigo.id_amigo)">{{verificarBloqueo(amigo.es_bloqueado)}}</button>
             <button class="delete-friend" style="margin-right: 5%;" (click)="eliminarAmigo(amigo.id_amigo)">Eliminar</button>
