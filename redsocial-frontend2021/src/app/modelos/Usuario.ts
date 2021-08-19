@@ -10,6 +10,5 @@ export interface Usuario {
   presentacion: string;
   telefono: string;
   id_genero: number;
-
-
+  id_provincia: number;
 }

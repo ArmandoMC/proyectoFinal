@@ -5,7 +5,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
   selector: 'app-cambio-contrasena',
   templateUrl: './cambio-contrasena.component.html',
-  styleUrls: ['./cambio-contrasena.component.css']
+  styleUrls: ['./cambio-contrasena.component.css'],
 })
 export class CambioContrasenaComponent implements OnInit {
   usuario = {
@@ -21,14 +21,14 @@ export class CambioContrasenaComponent implements OnInit {
     presentacion: '',
     telefono: '',
     id_genero: 0,
-    nombre_genero: ''
+    nombre_genero: '',
   };
   newPassword = {
     contrasena_usuario: '',
-    confirm_contrasena_usuario: ''
+    confirm_contrasena_usuario: '',
   };
   contraseniaAct: string;
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
     this.getUsuario();
@@ -40,7 +40,8 @@ export class CambioContrasenaComponent implements OnInit {
       (res: any) => {
         this.almacenarUsuario(res[0]);
         console.log(res[0]);
-      }, err => { }
+      },
+      (err) => {}
     );
   }
   // Almacena usuario recibido de bd en objeto usuario
@@ -81,7 +82,8 @@ export class CambioContrasenaComponent implements OnInit {
       contrasena_usuario: this.newPassword.contrasena_usuario,
       presentacion: '',
       telefono: '',
-      id_genero: 0
+      id_genero: 0,
+      id_provincia: 0,
     };
     const contraseniaAC: Usuario = {
       id_usuario: 0,
@@ -94,15 +96,19 @@ export class CambioContrasenaComponent implements OnInit {
       contrasena_usuario: this.contraseniaAct,
       presentacion: '',
       telefono: '',
-      id_genero: 0
+      id_genero: 0,
+      id_provincia: 0,
     };
     // tslint:disable-next-line: triple-equals
-    if (this.newPassword.contrasena_usuario == this.newPassword.confirm_contrasena_usuario) {
-      this.usuarioService.confirmContrasena(this.usuario.id_usuario, contraseniaAC).subscribe(
-        (res: any) => {
+    if (
+      this.newPassword.contrasena_usuario ==
+      this.newPassword.confirm_contrasena_usuario
+    ) {
+      this.usuarioService
+        .confirmContrasena(this.usuario.id_usuario, contraseniaAC)
+        .subscribe((res: any) => {
           this.guardarContrasenia(newContrasena);
-        }
-      );
+        });
     } else {
       alert('No coinciden contraseñas');
     }
@@ -110,11 +116,10 @@ export class CambioContrasenaComponent implements OnInit {
   // actualiza contraseña de usuario de sesion actual
   // tslint:disable-next-line: typedef
   guardarContrasenia(usuario: Usuario) {
-    this.usuarioService.updateContrasena(this.usuario.id_usuario, usuario).subscribe(
-      (res: any) => {
+    this.usuarioService
+      .updateContrasena(this.usuario.id_usuario, usuario)
+      .subscribe((res: any) => {
         alert(res);
-      }
-    );
+      });
   }
-
 }

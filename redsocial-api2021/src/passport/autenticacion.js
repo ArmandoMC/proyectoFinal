@@ -11,7 +11,7 @@ passport.use('local-login', new LocalStrategy({
     passwordField: 'contrasena_usuario'
 }, async (email_user, contrasena_usuario, done) => {
     var values = [email_user]
-    const resultado = await conexion_pg.query("SELECT id_usuario, email_usuario FROM usuario where email_usuario = $1;", values);
+    const resultado = await conexion_pg.query("SELECT id_usuario, email_usuario, id_provincia FROM usuario where email_usuario = $1;", values);
     UsuarioEncontrado = resultado.rows[0]
     if (!UsuarioEncontrado) {
         return done(null, false, { message: 'Usuario no encontrado' })
